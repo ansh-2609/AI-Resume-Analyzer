@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import jobMatchedSlice from "./jobMatched";
 import resumeSlice from "./resumeSlice";
 import themeSlice from "./themeSlice";
+import interviewQuestionsSlice from "./interviewQuestionsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
         resume: resumeSlice.reducer,
         jobMatched: jobMatchedSlice.reducer,
         theme: themeSlice.reducer,
+        interviewQuestions: interviewQuestionsSlice.reducer
     },
 });

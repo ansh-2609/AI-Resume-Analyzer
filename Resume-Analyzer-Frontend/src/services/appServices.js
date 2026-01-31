@@ -340,3 +340,19 @@ export const getThemeBackend = async() => {
     throw err;
   }
 }
+
+export const fetchInterviewQuestions = async (jobTitle) => {
+  try{
+    const response = await fetch(`${API_URL}/api/questions/${jobTitle}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    return response.json();
+  }catch(err){
+    console.error('Error downloading resume:', err);
+    throw err;
+  }
+}

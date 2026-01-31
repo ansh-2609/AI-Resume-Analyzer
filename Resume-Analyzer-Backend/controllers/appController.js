@@ -20,6 +20,7 @@ const Groq = require("groq-sdk");
 const { buildJobQueriesFromSkills } = require('../config/jobQueryBuilder');
 const { fetchJobs } = require('../config/jobService');
 const User = require('../models/users/user');
+const FrontendQuestions = require('../models/interviewQuestions/frontendQuestions');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // function extractJSON(text) {
@@ -1140,6 +1141,21 @@ exports.getThemeBackend = async(req, res) => {
     const userId = req.userId;
     const theme = await User.getTheme(userId);
     return res.json(theme);
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({ error: err.message, ok: false });
+  }
+}
+
+exports.fetchInterviewQuestions = async(req,res) => {
+  try{
+    const jobTitle = req.params.jobTitle;
+    let interviewQuestions = [];
+    if(jobTitle === 'frontend developer'){
+      const [rows]= await FrontendQuestions.fetchAll();
+      interviewQuestions = rows;
+    }
+    return res.json(interviewQuestions);
   }catch(err){
     console.error(err);
     return res.status(500).json({ error: err.message, ok: false });

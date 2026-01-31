@@ -45,4 +45,8 @@ appRouter.post('/api/user/theme', appController.verifyToken, appController.setTh
 appRouter.get('/api/user/theme', appController.verifyToken, appController.getThemeBackend);
 
 
+appRouter.get('/api/questions/:jobTitle', appController.verifyToken, appController.fetchInterviewQuestions);
+// appRouter.get('/api/questions/backend', appController.verifyToken, appController.fetchBackendInterviewQuestions);
+
+
 module.exports = appRouter;

@@ -13,6 +13,7 @@ import { store } from './store/index.js';
 import HomeSimple from './components/Home.jsx';
 import Application from './components/Application.jsx';
 import Settings from './components/Setting.jsx';
+import InterviewPrep from './components/InterviewPrep.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,9 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/jobmatcher", element: <JobMatcher /> },
       { path: "/applications", element: <Application /> },
-      { path: "/interview", element: <div>Interview Prep</div> },
+      // { path: "/interview", element: <div>Interview Prep</div> },
+      // { path: "/interview", element: <InterviewPrep /> },
+      { path: "/interview", element: <InterviewPrep /> },
       { path: "/settings", element: <Settings /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> }
