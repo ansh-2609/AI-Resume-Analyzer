@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "AI Job Analyzer",
+    "version": "1.0",
+    "description": "Analyze job matches with your resume",
+    "permissions": ["activeTab", "storage"],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.linkedin.com/*", "*://*.indeed.com/*"],
+            "js": ["content.js"]
+        }
+    ]
+}
