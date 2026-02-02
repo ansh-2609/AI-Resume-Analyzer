@@ -21,7 +21,12 @@ const { buildJobQueriesFromSkills } = require('../config/jobQueryBuilder');
 const { fetchJobs } = require('../config/jobService');
 const User = require('../models/users/user');
 const FrontendQuestions = require('../models/interviewQuestions/frontendQuestions');
+const ReactQuestions = require('../models/interviewQuestions/reactQuestions');
+const BackendQuestions = require('../models/interviewQuestions/backendQuestions');
+const DataScientistQuestions = require('../models/interviewQuestions/dataScientistQuestions');
+const DevOpsQuestions = require('../models/interviewQuestions/devOpsQuestions');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq_chatbot = new Groq({ apiKey: process.env.GROQ_API_KEY_CHATBOT });
 
 // function extractJSON(text) {
 //   return text
@@ -1155,7 +1160,60 @@ exports.fetchInterviewQuestions = async(req,res) => {
       const [rows]= await FrontendQuestions.fetchAll();
       interviewQuestions = rows;
     }
+    else if(jobTitle === 'react developer'){
+      const [rows]= await ReactQuestions.fetchAll();
+      interviewQuestions = rows;
+    }
+    else if(jobTitle === 'backend developer'){
+      const [rows]= await BackendQuestions.fetchAll();
+      interviewQuestions = rows;
+    }
+    else if(jobTitle === 'data scientist'){
+      const [rows]= await DataScientistQuestions.fetchAll();
+      interviewQuestions = rows;
+    }
+    else if(jobTitle === 'devops engineer'){
+      const [rows]= await DevOpsQuestions.fetchAll();
+      interviewQuestions = rows;
+    }
     return res.json(interviewQuestions);
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({ error: err.message, ok: false });
+  }
+}
+
+exports.aiResponse = async(req, res) => {
+  try{
+    console.log('inside aiResponse');
+    const { jobTitle, activeQuestion, input } = req.body;
+    console.log('jobTitle:', jobTitle);
+    console.log('activeQuestion:', activeQuestion.question);
+    console.log('input:', input);
+
+    const context = `
+Job Role: ${jobTitle || "Interview Candidate"}
+Interview Question: ${activeQuestion.question || "N/A"}
+`;
+
+
+    const completion = await groq_chatbot.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      temperature: 0.6,
+      messages: [
+        {
+          role: "system",
+          content: `You are an interview preparation assistant. Explain answers clearly with examples and simple language. ${context}`,
+        },
+        {
+          role: "user",
+          content: input,
+        },
+      ],
+    });
+
+    const aiResponse = completion.choices[0].message.content;
+    res.json(aiResponse);
   }catch(err){
     console.error(err);
     return res.status(500).json({ error: err.message, ok: false });

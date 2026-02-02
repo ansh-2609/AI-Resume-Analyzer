@@ -356,3 +356,20 @@ export const fetchInterviewQuestions = async (jobTitle) => {
     throw err;
   }
 }
+
+export const aiResponse = async (jobTitle, activeQuestion, input) => {
+  try{
+    const response = await fetch(`${API_URL}/api/ai-response`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({jobTitle, activeQuestion, input})
+    });
+    return response.json();
+  }catch(err){
+    console.error('Error downloading resume:', err);
+    throw err;
+  }
+}
