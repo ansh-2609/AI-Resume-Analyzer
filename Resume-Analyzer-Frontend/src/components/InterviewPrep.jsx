@@ -11,12 +11,12 @@ import { fetchInterviewQuestions } from "../services/appServices";
 import { setJobId, setJobTitle, setQuestions } from "../store/interviewQuestionsSlice";
 
 const jobs = [
-  {
-    id: "frontend",
-    title: "Frontend Developer",
-    level: "Mid-Level",
-    description: "UI, performance, accessibility",
-  },
+  // {
+  //   id: "frontend",
+  //   title: "Frontend Developer",
+  //   level: "Mid-Level",
+  //   description: "UI, performance, accessibility",
+  // },
   {
     id: "react",
     title: "React Developer",

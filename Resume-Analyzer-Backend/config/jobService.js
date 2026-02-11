@@ -178,17 +178,27 @@ exports.fetchJobs = async (query, location) => {
   console.log('Active Jobs DB response:', data);
 
   // Normalize response to match your frontend
-  return (data.jobs || data.data || [])
-    .filter(job =>
-      job.location?.toLowerCase()?.includes("india")
-    )
-    .map(job => ({
-      title: job.title || job.job_title,
-      company: job.company || job.employer_name || "Unknown",
-      description: job.description || job.job_description || "",
-      location: job.location || "India",
-      applyLink: job.url || job.apply_link || "#",
-      source: "ActiveJobsDB"
-    }));
+  // return (data.jobs || data.data || [])
+  //   .filter(job =>
+  //     job.location?.toLowerCase()?.includes("india")
+  //   )
+  //   .map(job => ({
+  //     title: job.title || job.job_title,
+  //     company: job.company || job.employer_name || "Unknown",
+  //     description: job.description || job.job_description || "",
+  //     location: job.location || "India",
+  //     applyLink: job.url || job.apply_link || "#",
+  //     source: "ActiveJobsDB"
+  //   }));.
+
+  return (data.jobs || data.data || []).map(job => ({
+  title: job.job_title,
+  company: job.employer_name || "Unknown",
+  description: job.job_description || "",
+  location: job.job_location || "Unknown",
+  applyLink: job.job_apply_link || "#",
+  source: "ActiveJobsDB"
+}));
+
 };
 

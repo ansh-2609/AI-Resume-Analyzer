@@ -1,8 +1,9 @@
 const db = require("../../config/db");
 
 module.exports = class Skill {
-  constructor(id, resume_id, skill_name, category, confidence_score) {
+  constructor(id, user_id, resume_id, skill_name, category, confidence_score) {
     this.id = id;
+    this.user_id = user_id;
     this.resume_id = resume_id;
     this.skill_name = skill_name;
     this.category = category;

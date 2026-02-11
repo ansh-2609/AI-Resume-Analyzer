@@ -200,7 +200,7 @@ function Signup() {
             </div>
           </div>
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <input
               id="terms"
               name="terms"
@@ -218,7 +218,7 @@ function Signup() {
                 Privacy Policy
               </a>
             </label>
-          </div>
+          </div> */}
 
           <div>
             <button

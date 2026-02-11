@@ -598,7 +598,7 @@ ${job.description.substring(0, 4000)}
         temperature: 0.2
       });
 
-      const result = JSON.parse(extractJSON(completion.choices[0].message.content));
+      const result = extractJSON(completion.choices[0].message.content);
 
       matchedJobs.push({
           ...job,
@@ -674,8 +674,8 @@ Compare this resume with the job description and provide:
 
 1. Match score (0-100)
 2. Strong matches (skills/experience that align well)
-3. Missing requirements
-4. Suggestions to improve fit
+3. Missing requirements (skills/experience that are present in the job description but not in the resume)
+4. Suggestions to improve fit (give 3-5 suggestions)
 
 Resume Skills:
 ${JSON.stringify(flatResumeSkills)}
@@ -705,6 +705,92 @@ Return JSON exactly in this format:
   "suggestions": []
 }
 `;
+
+// const prompt = `
+// You are a STRICT ATS-style resume–job matching engine.
+
+// Your task is to compare a resume against a job description and return a structured evaluation.
+
+// ==============================
+// INTERNAL STEP (DO NOT OUTPUT)
+// ==============================
+// From the JOB DESCRIPTION, extract a list called REQUIRED_SKILLS.
+
+// REQUIRED_SKILLS rules:
+// - Include ONLY skills, tools, technologies, or frameworks
+// - Include ONLY items explicitly written in the job description
+// - Do NOT infer, generalize, or add synonyms
+// - Exclude soft skills, traits, and generic phrases
+
+// ==============================
+// MATCHING RULES (MANDATORY)
+// ==============================
+// - strongMatches:
+//   Items that appear in BOTH REQUIRED_SKILLS and the resume
+// - missing:
+//   Items that appear in REQUIRED_SKILLS but DO NOT appear anywhere in the resume
+// - You are FORBIDDEN from adding:
+//   - Resume-only skills to "missing"
+//   - Skills not explicitly written in the job description
+//   - Inferred or implied skills
+
+// If REQUIRED_SKILLS is empty:
+// - strongMatches MUST be []
+// - missing MUST be []
+
+// ==============================
+// SCORING RULES
+// ==============================
+// - Score must be an integer from 0 to 100
+// - Score is based ONLY on REQUIRED_SKILLS coverage
+// - Use this formula:
+//   score = round((strongMatches.length / REQUIRED_SKILLS.length) * 100)
+// - Extra resume skills MUST NOT increase or decrease the score
+// - Do NOT inflate scores
+
+// ==============================
+// SUGGESTIONS RULES
+// ==============================
+// - Suggestions must relate ONLY to missing REQUIRED_SKILLS
+// - Each suggestion should be concrete and actionable
+// - If nothing is missing, return an empty array []
+
+// ==============================
+// OUTPUT RULES (CRITICAL)
+// ==============================
+// - Output ONLY valid JSON
+// - Output MUST start with { and end with }
+// - No explanations, no markdown, no comments
+// - All array values MUST be plain strings
+
+// ==============================
+// INPUT DATA
+// ==============================
+
+// RESUME SKILLS:
+// ${JSON.stringify(flatResumeSkills)}
+
+// RESUME EXPERIENCE:
+// ${
+//   resumeData.experience
+//     ? JSON.stringify(resumeData.experience)
+//     : "Not specified"
+// }
+
+// JOB DESCRIPTION:
+// ${jobDescription}
+
+// ==============================
+// RESPONSE FORMAT (STRICT)
+// ==============================
+// {
+//   "score": number,
+//   "strongMatches": [],
+//   "missing": [],
+//   "suggestions": []
+// }
+// `;
+
 
 //     const prompt = `
 // You are an automated resume–job matching engine.
@@ -958,9 +1044,6 @@ Return JSON exactly in this format:
 //   "suggestions": []
 // }
 // `;
-
-
-
 
     const completion = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",

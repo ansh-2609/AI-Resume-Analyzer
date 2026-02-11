@@ -22,7 +22,6 @@ import {
   FireIcon as FireIconSolid
 } from '@heroicons/react/24/solid';
 
-import ResumePreview from './ResumePreview';
 import { useDispatch, useSelector } from 'react-redux';
 import { setJobMatched } from '../store/jobMatched';
 import { deleteResume, downloadResume, fetchMatchedJobs, fetchUserResumes } from '../services/appServices';
@@ -42,7 +41,7 @@ function Application() {
   const dispatch = useDispatch();
 
   const theme = useSelector((state) => state.theme.theme);
-const isDark = theme === "dark";
+  const isDark = theme === "dark";
 
 
 
@@ -855,7 +854,7 @@ const isDark = theme === "dark";
 
                   <button
                     onClick={() => handleDeleteResume(selectedResume.id)}
-                    className="col-span-2 px-4 py-2 bg-red-600 text-white rounded-md text-sm hover:bg-red-700"
+                    className="col-span-2 px-4 py-2 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 cursor-pointer"
                   >
                     Delete Resume
                   </button>
@@ -913,25 +912,28 @@ const isDark = theme === "dark";
               </div>
 
               {/* Top Skills */}
-              <div className="mt-6">
-                <h4 className={`text-sm font-semibold mb-3 ${isDark ? "text-white" : "text-gray-900"}`}>
-                  Your Top Skills
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {topSkills.map((skill, index) => (
-                    <span
-                      key={index}
-                      className={`px-3 py-1 text-xs font-medium rounded-full ${
-                        isDark 
-                          ? "bg-blue-900/50 text-blue-300" 
-                          : "bg-linear-to-r from-blue-100 to-indigo-100 text-blue-700"
-                      }`}
-                    >
-                      {skill}
-                    </span>
-                  ))}
+              {topSkills.length > 0 && (
+                <div className="mt-6">
+                  <h4 className={`text-sm font-semibold mb-3 ${isDark ? "text-white" : "text-gray-900"}`}>
+                    Your Top Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {topSkills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          isDark 
+                            ? "bg-blue-900/50 text-blue-300" 
+                            : "bg-linear-to-r from-blue-100 to-indigo-100 text-blue-700"
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+              
             </div>
 
             {/* Filter Card */}
@@ -951,7 +953,7 @@ const isDark = theme === "dark";
                       <button
                         key={type}
                         onClick={() => setFilter(type)}
-                        className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                        className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
                           filter === type
                             ? "bg-blue-600 text-white"
                             : isDark
@@ -979,7 +981,7 @@ const isDark = theme === "dark";
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                       isDark 
                         ? "bg-gray-700 border-gray-600 text-white" 
                         : "border-gray-300"
@@ -987,7 +989,7 @@ const isDark = theme === "dark";
                   >
                     <option value="score">Match Score (High to Low)</option>
                     <option value="title">Job Title (A-Z)</option>
-                    <option value="company">Company (A-Z)</option>
+                    <option value="company" >Company (A-Z)</option>
                   </select>
                 </div>
               </div>

@@ -827,9 +827,9 @@ function Dashboard() {
                       Download
                     </button>
 
-                    <button className="px-4 py-2 bg-blue-600 text-sm font-medium rounded-md text-white hover:bg-blue-700">
+                    {/* <button className="px-4 py-2 bg-blue-600 text-sm font-medium rounded-md text-white hover:bg-blue-700">
                       Edit Resume
-                    </button>
+                    </button> */}
 
                     <button
                       className="px-4 py-2 bg-red-600 text-sm font-medium rounded-md text-white hover:bg-red-700"

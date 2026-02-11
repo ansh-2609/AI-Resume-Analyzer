@@ -91,7 +91,7 @@ function App() {
       )}
 
       <main
-        className={`flex-1 py-8 ${
+        className={`flex-1 ${
           isLoggedIn ? "lg:pl-64" : ""
         }`}
       >
