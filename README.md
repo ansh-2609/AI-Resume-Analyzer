@@ -1,7 +1,7 @@
 # AI Resume Analyzer
 
 <p align="center">
-  <img src="Resume-Analyzer-Frontend/public/favicon.png" alt="AI Resume Analyzer Logo" width="100" />
+  <img src="AI-Resume-Analyzer-Frontend/public/favicon.png" alt="AI Resume Analyzer Logo" width="100" />
 </p>
 
 A full-stack web application that leverages AI to help users analyze their resumes, extract skills, match job postings and prepare for interviews. Built with React, Express.js, MySQL, and Socket.io, it provides a user-friendly interface and integrated with multiple AI APIs.
@@ -22,7 +22,7 @@ https://ai-resume-analyzer-frontend-tt59.onrender.com/
 
 ## 🎥 Video Demo
 
-https://github.com/user-attachments/assets/82befca3-8842-467d-a82e-d8f04cdb6d3e
+https://github.com/user-attachments/assets/7050b0ff-b48b-4b9b-aad0-ba2a1ce8166e
 
 ## 🌟 Features
 
